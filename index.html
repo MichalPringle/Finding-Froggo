@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Finding Froggo — A Text-Based Math Game</title>
+
+  <!-- Link to your CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">    <!-- Main wrapper  for game -->
+    <div class="card" role="application" aria-labelledby="game-title">
+
+      <!-- Header section w/ intro and title -->
+      <header>
+        <div>
+          <h1 id="game-title">Finding Froggo: A Math Adventure</h1>
+          <p class="lead">A text-based, story-driven math game for kids — find your froggo friend!</p>
+        </div>
+      </header>
+
+      <!-- Main game area-->
+      <main class="main" id="game">
+
+        <!-- Displays the story and controls -->
+        <section class="story-col" aria-live="polite">
+          <div class="story-box" id="storyBox">
+            <div class="story-text" id="storyText">Welcome! Enter your name to begin the adventure.</div>
+          </div>
+
+          <!-- Controls for game input -->
+          <div class="controls" id="controls">
+            <div id="nameArea">
+              <input id="playerName" type="text" placeholder="Your name" />
+              <button id="startBtn" type ="button">Start Story Mode</button>
+              <button id="practiceBtn" class="ghost" type="button">Practice Mode</button>
+            </div>
+
+            <!-- Q/A area (hidden until the game starts)-->
+            <div id="qaArea" style="display:none;width:100%">
+              <div class="input-row">
+                <input id="answerInput" type="text" inputmode="numeric" placeholder="Type your answer" />
+                <button id="submitAnswer" type="button">Submit</button>
+                <button id="hintBtn" class="hint" type="button">Hint</button>
+                <button id="skipBtn" class="secondary" type="button">Skip</button>
+              </div>
+
+              <!-- Feedback area -->
+              <div id="feedback" class="small"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Side column for score, chapter, and menu -->
+        <aside class="side-col">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="hud">
+              <div class="score-pill" id="scoreDisplay">Score: 0</div>
+              <div class="small" id="chapterDisplay">Chapter: 0 / 5</div>
+            </div>
+
+            <!-- Menu section w/ save, load, and quit buttons-->
+            <div style="background:#fff9f6;border:1px solid #fff0e6;padding:10px;border-radius:8px">
+              <div class="small" style="font-weight:700;margin-bottom:6px">Menu</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button id="saveBtn" class="ghost" type="button">Save</button>
+                <button id="loadBtn" class="ghost" type="button">Load</button>
+                <button id="quitBtn" class="ghost" type="button">Quit</button>
+              </div>
+            </div>
+
+            <!-- Practice mode section (hidden until practice mode is selected)-->
+            <div class="practice-area" id="practiceArea" style="display:none">
+              <div style="font-weight:700;margin-bottom:6px">Practice Mode</div>
+              <label for="practiceDifficulty" class="small muted">Difficulty</label>
+              <select id="practiceDifficulty">
+                <option value="easy">Easy (add/sub)</option>
+                <option value="medium">Medium (mult/div)</option>
+                <option value="hard">Hard (mixed)</option>
+              </select>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button id="practiceStart" class="secondary" type="button">Start Practice</button>
+                <button id="practiceQuit" class="ghost" type="button">Quit Practice</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </main>
+
+      <!-- Footer section w/ game note -->
+      <footer>
+        <div class="small">Made for elementary learners — story-driven practice with gentle feedback.</div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Link to your JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
