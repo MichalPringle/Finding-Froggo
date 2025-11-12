@@ -16,7 +16,7 @@
       <header>
         <div>
           <h1 id="game-title">Finding Froggo: A Math Adventure</h1>
-          <p class="lead">A text-based, story-driven math game for kids — find your froggo friend!</p>
+          <p class="lead">A text-based, story-driven math game for kids -- find your froggo friend!</p>
         </div>
       </header>
 
@@ -34,7 +34,7 @@
             <div id="nameArea">
               <input id="playerName" type="text" placeholder="Your name" />
               <button id="startBtn" type ="button">Start Story Mode</button>
-              <button id="practiceBtn" class="ghost" type="button">Practice Mode</button>
+
             </div>
 
             <!-- Q/A area (hidden until the game starts)-->
@@ -57,7 +57,7 @@
           <div style="display:flex;flex-direction:column;gap:10px">
             <div class="hud">
               <div class="score-pill" id="scoreDisplay">Score: 0</div>
-              <div class="small" id="chapterDisplay">Chapter: 0 / 5</div>
+              <div class="small" id="chapterDisplay">Chapter: 0 / 28</div>
             </div>
 
             <!-- Menu section w/ save, load, and quit buttons-->
@@ -70,27 +70,14 @@
               </div>
             </div>
 
-            <!-- Practice mode section (hidden until practice mode is selected)-->
-            <div class="practice-area" id="practiceArea" style="display:none">
-              <div style="font-weight:700;margin-bottom:6px">Practice Mode</div>
-              <label for="practiceDifficulty" class="small muted">Difficulty</label>
-              <select id="practiceDifficulty">
-                <option value="easy">Easy (add/sub)</option>
-                <option value="medium">Medium (mult/div)</option>
-                <option value="hard">Hard (mixed)</option>
-              </select>
-              <div style="display:flex;gap:8px;margin-top:8px">
-                <button id="practiceStart" class="secondary" type="button">Start Practice</button>
-                <button id="practiceQuit" class="ghost" type="button">Quit Practice</button>
-              </div>
-            </div>
+            
           </div>
         </aside>
       </main>
 
       <!-- Footer section w/ game note -->
       <footer>
-        <div class="small">Made for elementary learners — story-driven practice with gentle feedback.</div>
+        <div class="small">Made for elementary learners -- story-driven practice with gentle feedback.</div>
       </footer>
     </div>
   </div>

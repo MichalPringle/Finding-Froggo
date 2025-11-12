@@ -14,11 +14,20 @@ const saveBtn = document.getElementById("saveBtn");
 const loadBtn = document.getElementById("loadBtn");
 const quitBtn = document.getElementById("quitBtn");  // modified restart to quit since chance rule enforces restart
 
+
+
 hintBtn?.addEventListener("click", () => {  // Added more to user feedback 
   feedback.textContent = "Hint: Is the question asking to add, subtract, multiply, or divide? Remember you can always draw out the problem!";
 });
 
 skipBtn?.addEventListener("click", () => {
+ if(skipLocked) {
+  feedback.textContent = "You can't skip two questions in a row. Give it another try!";
+  return;
+ } 
+
+ skipLocked = true;
+ if(skipBtn) skipBtn.disabled = true; // Disable skip button until next question is answered
   chapter++;
   showNextPart();
 });
@@ -39,6 +48,10 @@ if (!raw) { feedback.textContent = "No save found."; return; }
   chapterDisplay.textContent = `Chapter: ${Math.min(chapter + 1, story.length)} / ${story.length}`; // changed to reflect correct chapter after load
   nameArea.style.display = playerName ? "none" : "block";
   qaArea.style.display = playerName ? "block" : "none";
+
+  skipLocked = false;
+  if(skipBtn) skipBtn.disabled = false; // Enable skip button after loading
+
   showNextPart();
   feedback.textContent = "Game loaded.";
 });
@@ -56,6 +69,9 @@ function restartGame() {   // added function to reset game state after loss of c
   feedback.textContent = "";
   submitAnswer.disabled = false; // re-enable submit button
   answerInput.value = ""; // clear input field
+ 
+  skipLocked = false;
+  if(skipBtn) skipBtn.disabled = false; // Enable skip button after restart
   showNextPart();
   answerInput.focus(); // focus input field for user convenience
    }
@@ -74,6 +90,8 @@ quitBtn?.addEventListener("click", () => {          // changed restart to quit b
   chapterDisplay.textContent = `Chapter: 0 / ${story.length}`; // reset chapter display
   storyText.textContent = "Welcome! Enter your name to begin the adventure.";
   feedback.textContent = "";
+  skipLocked = false;
+  if(skipBtn) skipBtn.disabled = false; // Enable skip button on quit
 });
 
 let playerName = "";
@@ -81,6 +99,7 @@ let score = 0;
 let chapter = 0;
 let chancesLeft = 3;        // added to enforce three chance rule 
 let timeoutHandle = null;  // added to manage reset timeout
+let skipLocked = false; // added to prevent consecutive skips 
 
 // Story segments and math challenges
 const story = [
@@ -91,8 +110,8 @@ const story = [
   },
   {
     text: "You follow the buzzing sound and find some tadpoles asking for help with counting lily pads.",
-    question: "There are 8 lily pads. 3 sink underwater. How many are left?",
-    answer: 5
+    question: "There are 8 lily pads. 5 sink underwater. How many are left?",
+    answer: 3
   },
   {
     text: "You hop to the next pond and meet a turtle who gives you a clue — but only if you solve his riddle.",
@@ -127,8 +146,8 @@ const story = [
   },
   {
     text: "You successfully cross the stepping stones and have now started your journey into the woods. As you are passing a tree, a squirrel offers you an acorn if you solve his challenge.",
-    question: "The squirrel has 20 acorns. He buries 5. How many acorns remain?",
-    answer: 15
+    question: "The squirrel has 30 acorns. He has to split them evenly between his family of five. How many acorns will each squirrel get?",
+    answer: 6
   },
   {
     text: "You find a glowing mushroom patch.",
@@ -238,8 +257,13 @@ startBtn.addEventListener("click", () => {
   qaArea.style.display = "block";
   chapter = 0;
   score = 0;
+  skipLocked = false; 
+  if(skipBtn) skipBtn.disabled = false; // Enable skip button at game start
   showNextPart();
 });
+
+
+
 
 // Display story and question
 function showNextPart() {
@@ -258,11 +282,16 @@ function showNextPart() {
 
 // Check answer
 submitAnswer.addEventListener("click", () => {
+ 
+ skipLocked = false;
+  if(skipBtn) skipBtn.disabled = false; // Re-enable skip button after answering  
+
   const playerAnswer = parseInt(answerInput.value);
   if (isNaN(playerAnswer)) {
     feedback.textContent = "Please enter a number.";
     return;
   }
+
   if (playerAnswer === currentAnswer) {
     feedback.textContent = "✅ Great job! That’s correct!";
     score += 10;
