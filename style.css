@@ -101,6 +101,31 @@ footer {
   text-align: center;
   font-size: 0.85rem;
   color: #777;
+}
+
+.wrap {
+  position: relative;
+  background-image: url("froggobackground.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(234, 250, 241, 0.45); /* Semi-transparent overlay */
+  z-index: 0; /* Place behind content */
+  pointer-events: none;
+}
+
+.card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95); /* Slightly transparent card background */
+  z-index: 1; /* Ensure card content is above overlay */
+
+}
 
   /* --- Mobile Responsive Styles --- */
 @media (max-width: 600px) {
