@@ -293,11 +293,19 @@ submitAnswer.addEventListener("click", () => {
   }
 
   if (playerAnswer === currentAnswer) {
-    feedback.textContent = "✅ Great job! That’s correct!";
-    score += 10;
-    scoreDisplay.textContent = `Score: ${score}`;
-    chapter++;
-    setTimeout(showNextPart, 1500);
+  feedback.textContent = "✅ Great job! That’s correct!";
+  score += 10;
+  scoreDisplay.textContent = `Score: ${score}`;
+
+  // ACHIEVEMENT SYSTEM
+  if (score >= 100 && !localStorage.getItem("badgeEarned")) {
+    alert("You earned the Math Star Badge!");
+    localStorage.setItem("badgeEarned", true);
+  }
+  // END ACHIEVEMENT SYSTEM
+
+  chapter++;
+  setTimeout(showNextPart, 1500);
   } else {
     chancesLeft--;   // change implemented to enforce three chance rule
     feedback.textContent = `❌ Oops! Try again.`;
@@ -312,7 +320,20 @@ submitAnswer.addEventListener("click", () => {
       timeoutHandle = setTimeout(() => { 
         restartGame();
       }, 1800);    
-      
     }
   }
 }); 
+
+// KEYBOARD SHORTCUTS
+document.addEventListener("keydown", (e) => {
+  // Press Enter to submit answer
+  if (e.key === "Enter") {
+    submitAnswer.click();
+  }
+
+  // Press H for hint
+  if (e.key.toLowerCase() === "h") {
+    hintBtn.click();
+  }
+});
+// END KEYBOARD SHORTCUTS
