@@ -27,13 +27,12 @@ skipBtn?.addEventListener("click", () => {
  } 
 
  skipLocked = true;
- if(skipBtn) skipBtn.disabled = true; // Disable skip button until next question is answered
-  chapter++;
-  showNextPart();
+ chapter++;
+ showNextPart();
 });
 
 saveBtn?.addEventListener("click", () => {
-  localStorage.setItem("froggoSave", JSON.stringify({ playerName, score, chapter }));
+  localStorage.setItem("froggoSave", JSON.stringify({ playerName, score, chapter, chancesLeft }));
   feedback.textContent = "Game saved.";
 });
 
@@ -44,13 +43,13 @@ if (!raw) { feedback.textContent = "No save found."; return; }
   playerName = data.playerName || "";
   score = data.score || 0;
   chapter = data.chapter || 0;
+  chancesLeft = data.chancesLeft ?? 3;   // added to restore chances left on load
   scoreDisplay.textContent = `Score: ${score}`;
   chapterDisplay.textContent = `Chapter: ${Math.min(chapter + 1, story.length)} / ${story.length}`; // changed to reflect correct chapter after load
   nameArea.style.display = playerName ? "none" : "block";
   qaArea.style.display = playerName ? "block" : "none";
 
   skipLocked = false;
-  if(skipBtn) skipBtn.disabled = false; // Enable skip button after loading
 
   showNextPart();
   feedback.textContent = "Game loaded.";
@@ -71,7 +70,6 @@ function restartGame() {   // added function to reset game state after loss of c
   answerInput.value = ""; // clear input field
  
   skipLocked = false;
-  if(skipBtn) skipBtn.disabled = false; // Enable skip button after restart
   showNextPart();
   answerInput.focus(); // focus input field for user convenience
    }
@@ -91,7 +89,7 @@ quitBtn?.addEventListener("click", () => {          // changed restart to quit b
   storyText.textContent = "Welcome! Enter your name to begin the adventure.";
   feedback.textContent = "";
   skipLocked = false;
-  if(skipBtn) skipBtn.disabled = false; // Enable skip button on quit
+  
 });
 
 let playerName = "";
@@ -258,7 +256,6 @@ startBtn.addEventListener("click", () => {
   chapter = 0;
   score = 0;
   skipLocked = false; 
-  if(skipBtn) skipBtn.disabled = false; // Enable skip button at game start
   showNextPart();
 });
 
@@ -284,7 +281,7 @@ function showNextPart() {
 submitAnswer.addEventListener("click", () => {
  
  skipLocked = false;
-  if(skipBtn) skipBtn.disabled = false; // Re-enable skip button after answering  
+   
 
   const playerAnswer = parseInt(answerInput.value);
   if (isNaN(playerAnswer)) {
